@@ -558,14 +558,19 @@ h1, h2, h3 {
 
 /* Sumário lateral: só aparece quando sobra espaço ao lado da coluna de
    leitura (720px) sem espremer o texto. Abaixo disso, .case-toc some e
-   a navegação entre seções continua só pelo scroll normal. */
+   a navegação entre seções continua só pelo scroll normal.
+   O gap até o sumário (160px) precisa cobrir o bleed de .stat-chart--wide
+   (120px para cada lado, ver acima) mais uma folga de 40px — senão os
+   gráficos largos passam por baixo do sumário. Isso empurra o breakpoint
+   de 1180px para 1300px, que é a largura mínima onde as duas colunas mais
+   esse gap cabem sem espremer a coluna de leitura. */
 .case-toc { display: none; }
 
-@media (min-width: 1180px) {
+@media (min-width: 1300px) {
   .case-body.wrap {
     display: grid;
     grid-template-columns: 720px 200px;
-    column-gap: 48px;
+    column-gap: 160px;
     justify-content: center;
     align-items: start;
   }
