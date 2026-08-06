@@ -215,6 +215,8 @@
 
 .ds-card__icon--accent { background: var(--ds-accent-100); color: var(--ds-accent-700); }
 
+.ds-card__icon svg { width: 22px; height: 22px; flex-shrink: 0; }
+
 .ds-card__title {
   font-family: var(--ds-font-display);
   font-size: 1.15rem;
