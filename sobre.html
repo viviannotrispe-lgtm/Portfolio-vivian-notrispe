@@ -37,6 +37,7 @@
       .about-hero { flex-direction: column; }
       .about-portrait { align-self: center; }
     }
+    .about-cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
   </style>
 </head>
 <body>
@@ -85,27 +86,30 @@
     </section>
 
     <section class="case-body wrap">
-      <div>
-        <h2 data-i18n="about.trajetoriaHeading">Trajetória</h2>
-        <p data-i18n="about.trajetoriaBody1">Me formei em Desenho Industrial pela UFF em 2019 e, três anos depois, fiz uma pós em Inovação, Design e Estratégia na ESPM. O nome do curso já entrega bem para onde minha carreira foi depois, mas na época eu ainda não sabia.</p>
-        <p data-i18n="about.trajetoriaBody2">Entrei em design de produto em 2019, numa empresa de e-commerce de produtos físicos e licenciados. Cuidava do roadmap anual, de custo e acompanhamento de produção, e de parcerias com marcas licenciadas, o que incluiu viajar para feiras internacionais na Ásia e visitar as fábricas de perto.</p>
-        <p data-i18n="about.trajetoriaBody3">Em 2021 migrei para produto digital, numa plataforma B2B SaaS de gestão de frotas. Comecei como designer júnior e passei por pleno, supervisão e coordenação de design, sempre em discovery de ponta a ponta, da conversa com o cliente até a interface. Nesse caminho também passei a estruturar time: onboarding de estagiários, mentoria e o Design System da empresa, hoje adotado em quase toda a plataforma.</p>
-        <p data-i18n-html="about.trajetoriaBody4">Mais recentemente acumulei a coordenação de design com um papel híbrido de PM e UX numa iniciativa de escopo organizacional, puxando uma meta estratégica da empresa junto com CS, Supply e Engenharia. Esse projeto está documentado como case aqui no portfólio, no <a href="projetos/basic-value.html">Basic Value</a>.</p>
-      </div>
+      <div class="case-content">
+        <div>
+          <h2 data-i18n="about.trajetoriaHeading">Trajetória</h2>
+          <p data-i18n="about.trajetoriaBody1">Me formei em Desenho Industrial pela UFF em 2019 e, três anos depois, fiz uma pós em Inovação, Design e Estratégia na ESPM. O nome do curso já entrega bem para onde minha carreira foi depois, mas na época eu ainda não sabia.</p>
+          <p data-i18n="about.trajetoriaBody2">Entrei em design de produto em 2019, numa empresa de e-commerce de produtos físicos e licenciados. Cuidava do roadmap anual, de custo e acompanhamento de produção, e de parcerias com marcas licenciadas, o que incluiu viajar para feiras internacionais na Ásia e visitar as fábricas de perto.</p>
+          <p data-i18n="about.trajetoriaBody3">Em 2021 migrei para produto digital, numa plataforma B2B SaaS de gestão de frotas. Comecei como designer júnior e passei por pleno, supervisão e coordenação de design, sempre em discovery de ponta a ponta, da conversa com o cliente até a interface. Nesse caminho também passei a estruturar time: onboarding de estagiários, mentoria e o Design System da empresa, hoje adotado em quase toda a plataforma.</p>
+          <p data-i18n-html="about.trajetoriaBody4">Mais recentemente acumulei a coordenação de design com um papel híbrido de PM e UX numa iniciativa de escopo organizacional, puxando uma meta estratégica da empresa junto com CS, Supply e Engenharia. Esse projeto está documentado como case aqui no portfólio, no <a href="projetos/basic-value.html">Basic Value</a>.</p>
+        </div>
 
-      <div>
-        <h2 data-i18n="about.comoEuTrabalhoHeading">Como eu trabalho</h2>
-        <p data-i18n="about.comoEuTrabalhoBody1">Gosto de investigação e de colocar a mão na massa. Antes de propor qualquer solução, quero entender o problema do jeito que o cliente vive ele: entrevista, gravação de sessão, análise de dado de uso. Não me contento com um diagnóstico genérico, prefiro causas raiz específicas a uma lista vaga de sintomas.</p>
-        <p data-i18n="about.comoEuTrabalhoBody2">Também gosto que esse diagnóstico vire algo que outras áreas conseguem usar, não só um relatório de UX. Prefiro transformar a investigação numa métrica ou num critério de priorização que times como CS, Supply e Produto adotem em conjunto, para que a solução não dependa só de mim para continuar de pé.</p>
-      </div>
+        <div>
+          <h2 data-i18n="about.comoEuTrabalhoHeading">Como eu trabalho</h2>
+          <p data-i18n="about.comoEuTrabalhoBody1">Gosto de investigação e de colocar a mão na massa. Antes de propor qualquer solução, quero entender o problema do jeito que o cliente vive ele: entrevista, gravação de sessão, análise de dado de uso. Não me contento com um diagnóstico genérico, prefiro causas raiz específicas a uma lista vaga de sintomas.</p>
+          <p data-i18n="about.comoEuTrabalhoBody2">Também gosto que esse diagnóstico vire algo que outras áreas conseguem usar, não só um relatório de UX. Prefiro transformar a investigação numa métrica ou num critério de priorização que times como CS, Supply e Produto adotem em conjunto, para que a solução não dependa só de mim para continuar de pé.</p>
+        </div>
 
-      <div>
-        <h2 data-i18n="about.foraDoTrabalhoHeading">Fora do trabalho</h2>
-        <p data-i18n="about.foraDoTrabalhoBody">Estou quase sempre ao ar livre: caminhada, trilha, qualquer desculpa para sair de casa. Também gosto de artesanato e de fazer coisas com as mãos, o contraponto analógico de passar o dia inteiro em frente a uma tela.</p>
-      </div>
+        <div>
+          <h2 data-i18n="about.foraDoTrabalhoHeading">Fora do trabalho</h2>
+          <p data-i18n="about.foraDoTrabalhoBody">Estou quase sempre ao ar livre: caminhada, trilha, qualquer desculpa para sair de casa. Também gosto de artesanato e de fazer coisas com as mãos, o contraponto analógico de passar o dia inteiro em frente a uma tela.</p>
+        </div>
 
-      <div>
-        <a class="btn" href="contato.html" data-i18n="about.cta">Entrar em contato →</a>
+        <div class="about-cta-row">
+          <a class="btn" href="contato.html" data-i18n="about.cta">Entrar em contato →</a>
+          <a class="btn btn--outline" href="assets/docs/curriculo-vivian-notrispe-pt.pdf" download data-i18n="contact.downloadCta" data-i18n-attr="href=contact.downloadCtaHref">Baixar currículo (PDF) ↓</a>
+        </div>
       </div>
     </section>
   </main>

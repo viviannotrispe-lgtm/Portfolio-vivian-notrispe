@@ -87,7 +87,8 @@
     "emailLabel": "Email",
     "phoneLabel": "Phone",
     "linkedinLabel": "LinkedIn",
-    "downloadCta": "Download résumé (PDF) ↓"
+    "downloadCta": "Download résumé (PDF) ↓",
+    "downloadCtaHref": "assets/docs/curriculo-vivian-notrispe-en.pdf"
   },
   "projectsIndex": {
     "title": "Projects — Vivian Notrispe",

@@ -1150,3 +1150,10 @@ h1, h2, h3 {
   transition: filter 0.15s ease;
 }
 .btn:hover { filter: brightness(0.92); }
+
+.btn--outline {
+  background: none;
+  border: 1px solid var(--line-strong);
+  color: var(--ink);
+}
+.btn--outline:hover { filter: none; background: var(--line); }
