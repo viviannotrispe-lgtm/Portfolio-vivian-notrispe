@@ -314,7 +314,13 @@
         "img3Label": "Orders page · per-device detail",
         "img3Alt": "Orders page screen showing a table with the individual status of each device in the order, associated vehicle, delivery address and related ticket.",
         "img3Caption": "Detailed per-device view, built for orders with multiple items and different installation dates.",
-        "body4": "As part of the same effort, the team also delivered a scheduling shortcut directly from the orders page, connected to an AI scheduling agent, a delivery I'll cover in a separate case."
+        "body4": "As part of the same effort, the team also delivered an AI scheduling agent, accessible directly from the orders page. Reading the list of stalled devices every week, the agent identifies pending installations and opens a one-off alert suggesting a scheduling date; if the customer wants to go further, a conversational flow walks them through picking a date and time window without filling out a scheduling form by hand. I'll cover this agent in a separate case; here's a first look at the experience.",
+        "img4Label": "Installation agent · initial alert",
+        "img4Alt": "Floating card in the corner of the screen warning that 14 devices are awaiting installation, broken down by batch, with a button to schedule installation now.",
+        "img4Caption": "The agent identifies devices that have been sitting uninstalled for more than 30 days and opens a one-off alert on the dashboard, without requiring the customer to look for that information elsewhere.",
+        "img5Label": "Installation agent · conversational flow",
+        "img5Alt": "Chat window from the installation agent asking which date the customer prefers to schedule, suggesting an available date and then asking for the preferred time window between morning, afternoon or evening.",
+        "img5Caption": "Continuing through the chat, the agent walks the customer through picking a date and time window in a few exchanges, replacing manual entry into a scheduling form."
       },
       "result": {
         "stat1Value": "32%",
@@ -379,8 +385,8 @@
         "body4": "I worked as PM and principal UX (PMX) on the Account Experience team, and this was the second workstream I took on as DRI after Basic Value: a recommendation engine that, based on what had already been done in the dashboard and what was still missing for Basic Value, decides at every moment which next action makes sense to show that specific customer."
       },
       "problem": {
-        "body1": "Leadership's direction was to apply AI to the solutions, with no defined scope of where or how. It quickly became clear that letting an LLM decide on its own what to recommend and when was a risky bet: we have no way to audit why the model recommended X to customer Y, nor to guarantee it never shows two competing recommendations in the same session. That kind of overload was exactly what the Basic Value research had already flagged as a cause of abandonment.",
-        "body2": "The real product problem, then, wasn't generating personalized text: it was deciding, in a deterministic and auditable way, which recommendation wins in each context, before any LLM enters the picture. That was the part of the project I took on as my main focus."
+        "body1": "The first decision was to bring that guidance into the product itself, instead of relying on one-off trainings or waiting for the customer to figure it out on their own. Three criteria guided that choice: the recommendation had to show up in the context where the customer was already using the platform, lead to a concrete configuration or usage action, and follow the account's evolution over time, instead of being a single nudge during onboarding.",
+        "body2": "But deciding what to recommend and when couldn't be left entirely to an LLM: we had no way to audit why the model recommended X to customer Y, nor to guarantee it would never show two competing recommendations in the same session. That kind of overload was exactly what the Basic Value research had already flagged as a cause of abandonment. The real product problem, then, wasn't generating personalized text: it was deciding, in a deterministic and auditable way, which recommendation wins in each context, before any LLM enters the picture. That was the part of the project I took on as my main focus."
       },
       "process": {
         "intro": "I mapped each of the journeys that make up Basic Value (Installation and Setup + Configuration, in this first version) into objective signals already available in the dashboard and CRM: percentage of vehicles installed, days without any relevant movement, whether the next installation batch already had a scheduled date, how many of the 9 Setup criteria had already been met, among others. On top of these signals, I specified two layers of rules:",
@@ -413,13 +419,23 @@
         "body3": "Before exposing this to real customers, we validated the logic in isolation: we ran the engine over data from a real fleet, using Mastra AI to orchestrate the LLM call, and compared the output against what the deterministic ruleset predicted. This step also answered operational questions that only surface once the logic actually exists: how many LLM calls per customer this generates, and whether it makes sense to run the engine on every dashboard visit or only periodically (we chose periodic execution, not real-time, for cost reasons). Next, we ran E2E tests with real customers in A/B groups via feature flag, which surfaced concrete problems before the wide rollout: camera recommendations showing up for fleets without an installed camera, or a floating card duplicating a suggestion that had already been dismissed in another component on the same screen."
       },
       "solution": {
-        "body1": "In practice, this logic translates into four UI components with decreasing intrusiveness: a blocking modal for Critical, a persistent banner for Urgent, a floating card for Important, and a contextual recommendation within the flow for Suggestive. The home screen also changes depending on the fleet's stage. I won't go deep into this experience layer here because it wasn't my main focus in this project; the ruleset and prioritization above are what support any of these screens.",
-        "img1Label": "Home · floating recommendation card",
-        "img1Alt": "Dashboard home showing fleet installation progress and a high-priority floating recommendation card suggesting a review of the AI-generated driver behavior ranking.",
-        "img1Caption": "The floating card appears over the home screen, prioritized by the criticality tier, without blocking the customer's navigation.",
-        "img2Label": "Vehicles · contextual recommendation",
-        "img2Alt": "Vehicles page showing a contextual recommendation suggesting creating points of interest from recurring stops detected by AI.",
-        "img2Caption": "Contextual recommendations appear within the usage flow itself: here, suggesting the creation of points of interest from the fleet's recurring stops.",
+        "body1": "In practice, this logic translates into UI components with increasing intrusiveness by level: a contextual banner for Suggestive, a floating card for Important, and a blocking modal for Urgent and Critical. The home screen also changes depending on the fleet's stage. I won't go deep into this experience layer here because it wasn't my main focus in this project; the ruleset and prioritization above are what support any of these screens.",
+        "switcher": {
+          "label": "Criticality level · how the interface changes",
+          "chipsLabel": "Select the recommendation's criticality level",
+          "chipSugestivo": "Suggestive",
+          "chipImportante": "Important",
+          "chipUrgente": "Urgent",
+          "sugestivoAlt": "Banner at the top of the Vehicles page suggesting setting up maintenance alerts, with a 5-minute estimate and a button to configure them.",
+          "sugestivoCaption": "At the Suggestive level, the recommendation shows up as a banner at the top of the content, without interrupting navigation — here, suggesting maintenance alerts be set up.",
+          "importanteAlt": "Floating card in the bottom-left corner of the screen suggesting a review of the driver behavior ranking, with a high-priority tag and a button to review with AI.",
+          "importanteCaption": "At the Important level, the recommendation becomes a floating card, available in context without locking the screen — here, suggesting a review of the driver behavior ranking.",
+          "urgenteAlt": "Blocking modal over the Vehicles screen warning about devices that have been sitting uninstalled for more than 30 days, with options to schedule now or be reminded later.",
+          "urgenteCaption": "At the Urgent level, the recommendation starts interrupting the flow with a blocking modal — here, warning that devices have been sitting uninstalled for more than 30 days."
+        },
+        "cardAmpliadoLabel": "Floating card · detail",
+        "cardAmpliadoAlt": "Close-up of the floating recommendation card, showing the high-priority tag, the title \"Review the behavior ranking,\" the time estimate, and the button to review with AI.",
+        "cardAmpliadoCaption": "Zoomed in, the card highlights the elements that support the ruleset: priority tag, time estimate, and a single clear action, without competing with another recommendation on the same screen.",
         "body2": "We chose to launch gradually instead of releasing to the whole base at once: in March, the engine ran only for the slice of fleets with the lowest Basic Value (about 10% of the base), and we opened it up to the rest over April and May, monitoring behavior before exposing the entire base."
       },
       "result": {
@@ -456,10 +472,10 @@
           "jun": "Jun/26",
           "caption": "All three curves follow similar trajectories, but the slope changes visibly starting in April, when the engine started covering most of the base."
         },
-        "body3": "The effect on the previous case's north-star metric was also visible: stable Basic Value, which had been oscillating between 36% and 40% for six months without moving, broke through that plateau in the exact window when the engine started covering most of the base, closing June at 50%.",
+        "body3": "The effect on the previous case's north-star metric was also visible: stable Basic Value, which had been oscillating between 36% and 40% for six months without moving, broke through that plateau in the exact window when the engine started covering most of the base, closing June at 51%.",
         "chart3": {
           "label": "Stable Basic Value · % of MRR · Oct/25-Jun/26",
-          "alt": "Line chart showing stable Basic Value oscillating between 36% and 40% from October 2025 to March 2026, then rising to 50% in June 2026, coinciding with the recommendation engine rollout expansion starting in April.",
+          "alt": "Line chart showing stable Basic Value oscillating between 36% and 40% from October 2025 to March 2026, then rising to 51% in June 2026, coinciding with the recommendation engine rollout expansion starting in April.",
           "flatLabel": "~37% for 6 months",
           "rolloutLabel": "rollout expanded",
           "out": "Oct/25",

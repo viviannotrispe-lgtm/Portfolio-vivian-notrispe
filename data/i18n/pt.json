@@ -314,7 +314,13 @@
         "img3Label": "Página de pedidos · detalhe por dispositivo",
         "img3Alt": "Tela da página de pedidos mostrando uma tabela com o status individual de cada dispositivo do pedido, veículo associado, endereço de entrega e ticket relacionado.",
         "img3Caption": "Visão detalhada por dispositivo, criada para pedidos com múltiplos itens e datas de instalação diferentes.",
-        "body4": "Como parte do mesmo esforço, o time também entregou um atalho de agendamento direto pela página de pedidos, conectado a um agente de agendamento por IA, entrega que vou detalhar num case à parte."
+        "body4": "Como parte do mesmo esforço, o time também entregou um agente de agendamento por IA, acessível direto pela página de pedidos. A partir da leitura semanal dos dispositivos parados, o agente identifica instalações pendentes e abre um aviso pontual sugerindo agendar; se o cliente quiser seguir por ali, um fluxo conversacional conduz a escolha de data e período sem que ele precise preencher um formulário manualmente. Vou detalhar esse agente num case à parte; aqui fica um primeiro contato com a experiência.",
+        "img4Label": "Agente de instalação · aviso inicial",
+        "img4Alt": "Card flutuante no canto da tela avisando que existem 14 dispositivos aguardando instalação, com o detalhamento por lote e um botão para agendar a instalação agora.",
+        "img4Caption": "O agente identifica dispositivos parados há mais de 30 dias e abre um aviso pontual no painel, sem exigir que o cliente procure essa informação em outro lugar.",
+        "img5Label": "Agente de instalação · fluxo conversacional",
+        "img5Alt": "Janela de chat do agente de instalação perguntando qual data o cliente prefere para agendar, sugerindo uma data disponível e depois pedindo o período preferido entre manhã, tarde ou noite.",
+        "img5Caption": "Ao continuar pelo chat, o agente conduz a escolha de data e período em poucas trocas, substituindo o preenchimento manual de um formulário de agendamento."
       },
       "result": {
         "stat1Value": "32%",
@@ -379,8 +385,8 @@
         "body4": "Atuei como PM e UX principal (PMX) no time de Account Experience, e esta foi a segunda frente que assumi como DRI depois da Basic Value: um motor de recomendações que, a partir do que já tinha sido feito no painel e do que ainda faltava para o Basic Value, decide a cada momento qual é a próxima ação que faz sentido mostrar para aquele cliente específico."
       },
       "problem": {
-        "body1": "O direcionamento das lideranças era aplicar IA nas soluções, sem um recorte definido de onde ou como. Rapidamente ficou claro que deixar um LLM decidir sozinho o que recomendar e quando é uma aposta arriscada: não temos como auditar por que o modelo recomendou X para o cliente Y, nem garantir que ele nunca mostre duas recomendações concorrentes na mesma sessão. Esse tipo de sobrecarga foi exatamente o que a pesquisa da Basic Value já tinha apontado como causa de abandono.",
-        "body2": "O problema de produto real, então, não era gerar texto personalizado: era decidir, de forma determinística e auditável, qual recomendação vence em cada contexto, antes de qualquer LLM entrar em cena. Essa foi a parte do projeto que assumi como foco principal."
+        "body1": "A primeira decisão foi levar essa orientação para dentro do próprio produto, em vez de depender de treinamentos pontuais ou esperar que o cliente descobrisse sozinho o que fazer. Três critérios guiaram essa escolha: a recomendação deveria aparecer no contexto em que o cliente já estava usando a plataforma, levar a uma ação concreta de configuração ou uso, e acompanhar a evolução da conta ao longo do tempo, em vez de ser uma orientação única no onboarding.",
+        "body2": "Mas decidir o que recomendar e quando não podia ficar inteiramente a cargo de um LLM: não teríamos como auditar por que o modelo recomendou X para o cliente Y, nem garantir que ele nunca mostrasse duas recomendações concorrentes na mesma sessão. Esse tipo de sobrecarga foi exatamente o que a pesquisa da Basic Value já tinha apontado como causa de abandono. O problema de produto real, então, não era gerar texto personalizado: era decidir, de forma determinística e auditável, qual recomendação vence em cada contexto, antes de qualquer LLM entrar em cena. Essa foi a parte do projeto que assumi como foco principal."
       },
       "process": {
         "intro": "Mapeei cada uma das jornadas que compõem o Basic Value (Instalação e Setup + Configurações, nesta primeira versão) em sinais objetivos já disponíveis no painel e no CRM: percentual de veículos instalados, dias sem nenhum movimento relevante, se o próximo lote de instalação já tinha data marcada, quantos dos 9 critérios de Setup já haviam sido cumpridos, entre outros. Sobre esses sinais, especifiquei duas camadas de regra:",
@@ -413,13 +419,23 @@
         "body3": "Antes de expor isso a clientes reais, validamos a lógica isoladamente: rodamos o motor sobre dados de uma frota real, usando Mastra AI para orquestrar a chamada ao LLM, e comparamos a saída contra o que a régua determinística previa. Essa etapa também respondeu perguntas operacionais que só aparecem depois que a lógica existe de fato: quantas chamadas de LLM por cliente isso gera, e se cabe rodar o motor a cada acesso ao painel ou só periodicamente (optamos por execução periódica, não em tempo real, por custo). Na sequência, rodamos testes E2E com clientes reais em grupos A/B por feature flag, o que revelou problemas concretos antes do rollout amplo: recomendações de câmera aparecendo para frotas sem câmera instalada, ou um card flutuante duplicando uma sugestão que já tinha sido descartada em outro componente da mesma tela."
       },
       "solution": {
-        "body1": "Na prática, essa lógica se traduz em quatro componentes de UI com intrusividade decrescente: modal bloqueante para Crítico, banner persistente para Urgente, card flutuante para Importante e recomendação contextual dentro do fluxo para Sugestivo. A home também muda de acordo com o estágio da frota. Não vou detalhar essa camada de experiência a fundo aqui porque não foi o meu foco principal neste projeto; a régua e a priorização acima são o que sustentam qualquer uma dessas telas.",
-        "img1Label": "Home · card flutuante de recomendação",
-        "img1Alt": "Home do painel mostrando o progresso de instalação da frota e um card flutuante de recomendação de alta prioridade sugerindo revisar o ranking de comportamento dos motoristas com IA.",
-        "img1Caption": "O card flutuante aparece sobre a home, priorizado pela régua de criticidade, sem bloquear a navegação do cliente.",
-        "img2Label": "Veículos · recomendação contextual",
-        "img2Alt": "Página de veículos mostrando uma recomendação contextual sugerindo criar locais de interesse a partir de paradas recorrentes detectadas pela IA.",
-        "img2Caption": "Recomendações contextuais aparecem dentro do próprio fluxo de uso: aqui, sugerindo a criação de locais de interesse a partir de paradas recorrentes da frota.",
+        "body1": "Na prática, essa lógica se traduz em componentes de UI com intrusividade crescente conforme o nível: banner contextual para Sugestivo, card flutuante para Importante e modal bloqueante para Urgente e Crítico. A home também muda de acordo com o estágio da frota. Não vou detalhar essa camada de experiência a fundo aqui porque não foi o meu foco principal neste projeto; a régua e a priorização acima são o que sustentam qualquer uma dessas telas.",
+        "switcher": {
+          "label": "Nível de criticidade · como a interface muda",
+          "chipsLabel": "Selecionar nível de criticidade da recomendação",
+          "chipSugestivo": "Sugestivo",
+          "chipImportante": "Importante",
+          "chipUrgente": "Urgente",
+          "sugestivoAlt": "Banner no topo da página de Veículos sugerindo configurar alertas de manutenção, com estimativa de 5 minutos e botão para configurar.",
+          "sugestivoCaption": "No nível Sugestivo, a recomendação aparece como um banner no topo do conteúdo, sem interromper a navegação — aqui, sugerindo configurar alertas de manutenção.",
+          "importanteAlt": "Card flutuante no canto inferior esquerdo da tela sugerindo revisar o ranking de comportamento dos motoristas, com selo de alta prioridade e botão para revisar com IA.",
+          "importanteCaption": "No nível Importante, a recomendação vira um card flutuante, disponível no contexto sem travar a tela — aqui, sugerindo revisar o ranking de comportamento dos motoristas.",
+          "urgenteAlt": "Modal bloqueante sobre a tela de Veículos avisando sobre dispositivos parados há mais de 30 dias sem instalação, com opções para agendar agora ou lembrar mais tarde.",
+          "urgenteCaption": "No nível Urgente, a recomendação passa a interromper o fluxo com um modal bloqueante — aqui, avisando que existem dispositivos parados há mais de 30 dias sem instalação."
+        },
+        "cardAmpliadoLabel": "Card flutuante · detalhe",
+        "cardAmpliadoAlt": "Close-up do card flutuante de recomendação, mostrando o selo de alta prioridade, o título 'Revise o ranking de comportamento', a estimativa de tempo e o botão para revisar com IA.",
+        "cardAmpliadoCaption": "Ampliado, o card evidencia os elementos que sustentam a régua: selo de prioridade, tempo estimado e uma única ação clara, sem competir com outra recomendação na mesma tela.",
         "body2": "Escolhemos lançar de forma gradual em vez de liberar para toda a base de uma vez: em março, o motor rodou só para a fatia de frotas com Basic Value mais baixo (cerca de 10% da base), e fomos abrindo para o restante ao longo de abril e maio, acompanhando o comportamento antes de expor a base inteira."
       },
       "result": {
@@ -456,10 +472,10 @@
           "jun": "jun/26",
           "caption": "As três curvas seguem trajetórias parecidas, mas a inclinação muda visivelmente a partir de abril, quando o motor passou a cobrir a maior parte da base."
         },
-        "body3": "O reflexo disso na métrica-norte do case anterior também ficou visível: a Basic Value estável, que vinha oscilando entre 36% e 40% havia seis meses sem sair do lugar, rompeu esse patamar exatamente na janela em que o motor passou a cobrir a maior parte da base, fechando junho em 50%.",
+        "body3": "O reflexo disso na métrica-norte do case anterior também ficou visível: a Basic Value estável, que vinha oscilando entre 36% e 40% havia seis meses sem sair do lugar, rompeu esse patamar exatamente na janela em que o motor passou a cobrir a maior parte da base, fechando junho em 51%.",
         "chart3": {
           "label": "Basic Value estável · % de MRR · out/25-jun/26",
-          "alt": "Gráfico de linha mostrando a Basic Value estável oscilando entre 36% e 40% de outubro de 2025 a março de 2026, e subindo para 50% em junho de 2026, coincidindo com a ampliação do rollout do motor de recomendações a partir de abril.",
+          "alt": "Gráfico de linha mostrando a Basic Value estável oscilando entre 36% e 40% de outubro de 2025 a março de 2026, e subindo para 51% em junho de 2026, coincidindo com a ampliação do rollout do motor de recomendações a partir de abril.",
           "flatLabel": "~37% por 6 meses",
           "rolloutLabel": "rollout ampliado",
           "out": "out/25",
